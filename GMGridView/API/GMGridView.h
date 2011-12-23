@@ -78,6 +78,8 @@ typedef enum
 @property (nonatomic, readonly) UIScrollView *scrollView;             // Messing with the scrollView can lead to unexpected behavior. Avoid changing any properties
                                                                       // or changing its delegate. You have been warned.
 
+@property (nonatomic, gm_weak, setter = setGridFooterView:) UIView *gridFooterView;
+
 
 
 // Reusable cells

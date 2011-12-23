@@ -150,6 +150,8 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
 @synthesize firstPositionLoaded = _firstPositionLoaded;
 @synthesize lastPositionLoaded = _lastPositionLoaded;
 
+@synthesize gridFooterView = _gridFooterView;
+
 //////////////////////////////////////////////////////////////
 #pragma mark Constructors and destructor
 //////////////////////////////////////////////////////////////
@@ -375,6 +377,13 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
 - (void)setShowsHorizontalScrollIndicator:(BOOL)showsHorizontalScrollIndicator 
 {
   _scrollView.showsHorizontalScrollIndicator = showsHorizontalScrollIndicator;
+}
+
+- (void)setGridFooterView:(UIView *)gridFooterView {
+    [_gridFooterView removeFromSuperview];
+    _gridFooterView = gridFooterView;
+    [_scrollView addSubview:_gridFooterView];
+    [self setNeedsLayout];
 }
 
 - (BOOL)showsHorizontalScrollIndicator 
@@ -1163,6 +1172,7 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
 - (void)relayoutItemsAnimated:(BOOL)animated
 {    
     void (^layoutBlock)(void) = ^{
+        CGFloat maxHeight = 0;
         for (UIView *view in [self itemSubviews])
         {        
             if (view != _sortMovingItem && view != _transformingItem) 
@@ -1176,8 +1186,13 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
                 {
                     view.frame = newFrame;
                 }
+                maxHeight = MAX(maxHeight, origin.y + _itemSize.height);
             }
         }
+        _gridFooterView.frame = CGRectMake(0, maxHeight, self.bounds.size.width, _gridFooterView.bounds.size.height);
+        CGSize contentSize = [self.layoutStrategy contentSize];
+        contentSize.height = MAX(contentSize.height, maxHeight + _gridFooterView.bounds.size.height);
+        _scrollView.contentSize = contentSize;
     };
     
     if (animated) {
