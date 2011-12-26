@@ -422,7 +422,8 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
     }
     else if (gestureRecognizer == _sortingLongPressGesture)
     {
-        valid = !isScrolling && !self.isEditing && (self.sortingDelegate != nil);
+        CGPoint locationTouch = [_tapGesture locationInView:_scrollView];
+        valid = !isScrolling && !self.isEditing && (self.sortingDelegate != nil) && [self.layoutStrategy itemPositionFromLocation:locationTouch] != GMGV_INVALID_POSITION;;
     }
     else if (gestureRecognizer == _sortingPanGesture) 
     {
