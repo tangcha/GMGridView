@@ -56,6 +56,7 @@
 @synthesize defaultFullsizeViewResizingMask = _defaultFullsizeViewResizingMask;
 @synthesize deleteButton = _deleteButton;
 @synthesize deleteBlock = _deleteBlock;
+@synthesize customDeleteBlock = _customDeleteBlock;
 @synthesize deleteButtonIcon = _deleteButtonIcon;
 @synthesize deleteButtonOffset;
 
@@ -231,7 +232,10 @@
 
 - (void)actionDelete
 {
-    if (self.deleteBlock) 
+    if (self.customDeleteBlock) 
+    {
+        self.customDeleteBlock(self);
+    } else if (self.deleteBlock)
     {
         self.deleteBlock(self);
     }

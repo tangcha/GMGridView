@@ -51,6 +51,7 @@ typedef void (^GMGridViewCellDeleteBlock)(GMGridViewCell*);
 
 @property (nonatomic, getter=isEditing) BOOL editing;
 @property (nonatomic, copy) GMGridViewCellDeleteBlock deleteBlock;
+@property (nonatomic, copy) GMGridViewCellDeleteBlock customDeleteBlock;
 
 @property (nonatomic, assign) UIViewAutoresizing defaultFullsizeViewResizingMask;
 @property (nonatomic, gm_weak) UIButton *deleteButton;
