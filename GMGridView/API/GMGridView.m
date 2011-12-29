@@ -1190,10 +1190,6 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
                 maxHeight = MAX(maxHeight, origin.y + _itemSize.height);
             }
         }
-        _gridFooterView.frame = CGRectMake(0, maxHeight, self.bounds.size.width, _gridFooterView.bounds.size.height);
-        CGSize contentSize = [self.layoutStrategy contentSize];
-        contentSize.height = MAX(contentSize.height, maxHeight + _gridFooterView.bounds.size.height);
-        _scrollView.contentSize = contentSize;
     };
     
     if (animated) {
@@ -1208,6 +1204,9 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
     }else {
         layoutBlock();
     }
+    
+    CGSize contentSize = [self.layoutStrategy contentSize];
+    _gridFooterView.frame = CGRectMake(_scrollView.contentOffset.x, contentSize.height - _gridFooterView.bounds.size.height, self.bounds.size.width, _gridFooterView.bounds.size.height);
 }
 
 
