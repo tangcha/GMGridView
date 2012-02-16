@@ -1153,12 +1153,11 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
     [self.layoutStrategy rebaseWithItemCount:_numberTotalItems insideOfBounds:self.bounds];
     
     CGSize contentSize = [self.layoutStrategy contentSize];
+    contentSize.height = MAX(_scrollView.bounds.size.height + 1, contentSize.height);
     
     _minPossibleContentOffset = CGPointMake(0, 0);
     _maxPossibleContentOffset = CGPointMake(contentSize.width - _scrollView.bounds.size.width + _scrollView.contentInset.right, 
                                             contentSize.height - _scrollView.bounds.size.height + _scrollView.contentInset.bottom);
-    
-    contentSize.height = MAX(_scrollView.bounds.size.height + 1, contentSize.height);
 
     [UIView animateWithDuration:kDefaultAnimationDuration 
                           delay:0 
