@@ -44,20 +44,29 @@
     if (enabled) 
     {
         CGFloat rotation = 0.03;
+        CGFloat duration = 0.13;
         
-        CABasicAnimation *shake = [CABasicAnimation animationWithKeyPath:@"transform"];
-        shake.duration = 0.13;
-        shake.autoreverses = YES;
-        shake.repeatCount  = MAXFLOAT;
-        shake.removedOnCompletion = NO;
-        shake.fromValue = [NSValue valueWithCATransform3D:CATransform3DRotate(self.layer.transform,-rotation, 0.0 ,0.0 ,1.0)];
-        shake.toValue   = [NSValue valueWithCATransform3D:CATransform3DRotate(self.layer.transform, rotation, 0.0 ,0.0 ,1.0)];
+        CGFloat startAngle = (CGFloat)(arc4random() % (int)(rotation * 1000)) / 1000. * 2 - rotation;
+        CGFloat firstTimeDuration = (startAngle + rotation) / rotation * duration / 2;
         
-        [self.layer addAnimation:shake forKey:@"shakeAnimation"];
+        self.transform = CGAffineTransformMakeRotation(startAngle);
+        [UIView animateWithDuration:firstTimeDuration delay:0 options:UIViewAnimationCurveLinear animations:^{
+            self.transform = CGAffineTransformMakeRotation(rotation);
+        } completion:^(BOOL finished) {
+            CABasicAnimation *shake = [CABasicAnimation animationWithKeyPath:@"transform"];
+            shake.duration = duration;
+            shake.autoreverses = YES;
+            shake.repeatCount  = MAXFLOAT;
+            shake.removedOnCompletion = NO;
+            shake.fromValue = [NSValue valueWithCATransform3D:CATransform3DRotate(self.layer.transform, 0, 0.0 ,0.0 ,1.0)];
+            shake.toValue   = [NSValue valueWithCATransform3D:CATransform3DRotate(self.layer.transform, -2 *rotation, 0.0 ,0.0 ,1.0)];
+            [self.layer addAnimation:shake forKey:@"shakeAnimation"];
+        }];
     }
     else
     {
         [self.layer removeAnimationForKey:@"shakeAnimation"];
+        self.transform = CGAffineTransformIdentity;
     }
 }
 
