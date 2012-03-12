@@ -78,7 +78,7 @@
     if ((self = [super initWithFrame:frame])) 
     {
         self.autoresizesSubviews = !YES;
-        self.editing = NO;
+        _editing = NO;
         
         UIButton *deleteButton = [UIButton buttonWithType:UIButtonTypeCustom];
         self.deleteButton = deleteButton;
@@ -322,4 +322,12 @@
     }
 }
 
+-(void) dealloc
+{
+    self.contentView = nil;
+    self.deleteButtonIcon = nil;
+    self.fullSizeView = nil;
+    self.deleteBlock = nil;
+    self.customDeleteBlock = nil;
+}
 @end

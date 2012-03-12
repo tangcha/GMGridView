@@ -78,7 +78,7 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
 }
 
 @property (nonatomic, readonly) BOOL itemsSubviewsCacheIsValid;
-@property (nonatomic, strong) NSArray *itemSubviewsCache;
+@property (nonatomic, retain) NSArray *itemSubviewsCache;
 @property (atomic) NSInteger firstPositionLoaded;
 @property (atomic) NSInteger lastPositionLoaded;
 
@@ -258,6 +258,12 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidReceiveMemoryWarningNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillChangeStatusBarOrientationNotification object:nil];
+    
+    self.layoutStrategy = nil;
+    _scrollView = nil;
+    self.gridFooterView = nil;
+    self.mainSuperView = nil;
+    self.itemSubviewsCache = nil;
 }
 
 //////////////////////////////////////////////////////////////
@@ -1100,7 +1106,7 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
     
     if (self.itemsSubviewsCacheIsValid) 
     {
-        subviews = [self.itemSubviewsCache copy];
+        subviews = self.itemSubviewsCache;
     }
     else
     {
@@ -1118,7 +1124,7 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
             
             subviews = itemSubViews;
             
-            self.itemSubviewsCache = [subviews copy];
+            self.itemSubviewsCache = subviews;
             _itemsSubviewsCacheIsValid = YES;
         }
     }
@@ -1250,7 +1256,9 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
 - (void)cleanupUnseenItems
 {
     dispatch_async(dispatch_get_main_queue(), ^{
-        
+        if (!_dataSource) {
+            return;
+        }
         NSRange rangeOfPositions = [self.layoutStrategy rangeOfPositionsInBoundsFromOffset: _scrollView.contentOffset];
         GMGridViewCell *cell;
         

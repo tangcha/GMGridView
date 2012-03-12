@@ -34,8 +34,8 @@
     
 }
 
-@property (nonatomic, strong) UIView *contentView;         // The contentView - default is nil
-@property (nonatomic, strong) UIImage *deleteButtonIcon;   // Delete button image
+@property (nonatomic, retain) UIView *contentView;         // The contentView - default is nil
+@property (nonatomic, retain) UIImage *deleteButtonIcon;   // Delete button image
 @property (nonatomic) CGPoint deleteButtonOffset;          // Delete button offset relative to the origin
 
 - (void)prepareForReuse;

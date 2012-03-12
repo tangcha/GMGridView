@@ -43,7 +43,7 @@ typedef void (^GMGridViewCellDeleteBlock)(GMGridViewCell*);
     
 }
 
-@property (nonatomic, strong) UIView *fullSizeView;
+@property (nonatomic, retain) UIView *fullSizeView;
 @property (nonatomic, assign) CGSize fullSize;
 
 @property (nonatomic, readonly, getter=isInShakingMode) BOOL inShakingMode;
