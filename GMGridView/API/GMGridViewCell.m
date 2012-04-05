@@ -177,7 +177,6 @@
                      completion:nil];
     
     self.contentView.userInteractionEnabled = !editing;
-    [self shakeStatus:editing];
 }
 
 - (void)setDeleteButtonOffset:(CGPoint)offset
