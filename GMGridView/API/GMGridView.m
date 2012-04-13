@@ -523,7 +523,7 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
             CGPoint offset = translation;
             CGPoint locationInScroll = [panGesture locationInView:_scrollView];
                         
-            _sortMovingItem.transform = CGAffineTransformMakeTranslation(offset.x, offset.y);
+            _sortMovingItem.transform = CGAffineTransformConcat(CGAffineTransformMakeTranslation(offset.x, offset.y), CGAffineTransformMakeScale(1.2, 1.2));
             [self sortingMoveDidContinueToPoint:locationInScroll];
             
             break;
