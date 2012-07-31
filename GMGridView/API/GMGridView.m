@@ -75,6 +75,7 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
     CGFloat _lastScale;
     BOOL _inFullSizeMode;
     BOOL _rotationActive;
+    BOOL removeCellOnDelete;
 }
 
 @property (nonatomic, readonly) BOOL itemsSubviewsCacheIsValid;
@@ -143,7 +144,7 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
 @synthesize showFullSizeViewWithAlphaWhenTransforming;
 @synthesize editing = _editing;
 @synthesize scrollView = _scrollView;
-
+@synthesize removeCellOnDelete;
 @synthesize itemsSubviewsCacheIsValid = _itemsSubviewsCacheIsValid;
 @synthesize itemSubviewsCache;
 
@@ -249,6 +250,8 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receivedMemoryWarningNotification:) name:UIApplicationDidReceiveMemoryWarningNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willRotate:) name:UIApplicationWillChangeStatusBarOrientationNotification object:nil];
+        
+        removeCellOnDelete = YES;
     }
     return self;
 }
@@ -1093,7 +1096,9 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
         if (index != GMGV_INVALID_POSITION) 
         {
             [weakSelf.dataSource GMGridView:weakSelf deleteItemAtIndex:index];
-            [weakSelf removeObjectAtIndex:index];
+            if (removeCellOnDelete) {
+                [weakSelf removeObjectAtIndex:index];
+            }
         }
     };
     
