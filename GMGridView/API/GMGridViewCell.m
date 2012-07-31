@@ -44,6 +44,23 @@
 #pragma mark -
 #pragma mark Implementation GMGridViewCell
 //////////////////////////////////////////////////////////////
+@implementation TCDeleteButton 
+
+- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event
+{
+    BOOL result = [super pointInside:point withEvent:event];
+    NSLog(@"point %@ %d", NSStringFromCGPoint(point),result);
+    return result;
+}
+
+//- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
+//{
+//    NSLog(@"hit test point %@", NSStringFromCGPoint(point));
+//    return [super hitTest:point withEvent:event];
+//}
+
+@end
+
 
 @implementation GMGridViewCell
 
@@ -80,7 +97,7 @@
         self.autoresizesSubviews = !YES;
         _editing = NO;
         
-        UIButton *deleteButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        UIButton *deleteButton = [TCDeleteButton buttonWithType:UIButtonTypeCustom];
         self.deleteButton = deleteButton;
         [self.deleteButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         self.deleteButton.showsTouchWhenHighlighted = YES;

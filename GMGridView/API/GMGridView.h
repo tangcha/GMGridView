@@ -77,7 +77,7 @@ typedef enum
 @property (nonatomic, readwrite) BOOL removeCellOnDelete;
 @property (nonatomic, readonly) UIScrollView *scrollView;             // Messing with the scrollView can lead to unexpected behavior. Avoid changing any properties
                                                                       // or changing its delegate. You have been warned.
-
+@property (nonatomic, strong) UIView *gridHeaderView;                 // Default is nil
 @property (nonatomic, gm_weak, setter = setGridFooterView:) UIView *gridFooterView;
 
 

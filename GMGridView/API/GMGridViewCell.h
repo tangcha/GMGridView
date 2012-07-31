@@ -28,6 +28,13 @@
 
 #import <UIKit/UIKit.h>
 #import "GMGridView-Constants.h"
+@interface TCDeleteButton: UIButton
+{
+    
+}
+
+@end
+
 
 @interface GMGridViewCell : UIView
 {
