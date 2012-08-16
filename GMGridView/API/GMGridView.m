@@ -269,6 +269,7 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
     self.gridFooterView = nil;
     self.mainSuperView = nil;
     self.itemSubviewsCache = nil;
+    self.gridHeaderView = nil;
 }
 
 //////////////////////////////////////////////////////////////
@@ -1201,15 +1202,15 @@ static const UIViewAnimationOptions kDefaultAnimationOptions = UIViewAnimationOp
 
 - (void)relayoutGridHeaderView:(BOOL)animated
 {
-    CGRect frame = CGRectMake(0, 0, self.bounds.size.width, self.gridHeaderView.bounds.size.height);
-    if (animated) {
-        [UIView animateWithDuration:kDefaultAnimationDuration  delay:0 options:kDefaultAnimationOptions animations:^{
-            self.gridHeaderView.frame = frame;
-        } completion:nil];
-    }
-    else {
-        self.gridHeaderView.frame = frame;
-    }
+//    CGRect frame = CGRectMake(0, 0, self.bounds.size.width, self.gridHeaderView.bounds.size.height);
+//    if (animated) {
+//        [UIView animateWithDuration:kDefaultAnimationDuration  delay:0 options:kDefaultAnimationOptions animations:^{
+//            self.gridHeaderView.frame = frame;
+//        } completion:nil];
+//    }
+//    else {
+//        self.gridHeaderView.frame = frame;
+//    }
 }
 
 - (void)relayoutItemsAnimated:(BOOL)animated
